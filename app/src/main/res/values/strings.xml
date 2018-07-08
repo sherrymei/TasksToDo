@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Tasks to Do</string>
+    <string-array name="tasks_array">
+        <item>None</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Biweekly</item>
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
+</resources>

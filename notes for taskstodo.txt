@@ -1,0 +1,19 @@
+main activity - user view all their lists and tasks 
+dropdown of lists that user created / default lists
+for each date, a list of tasks that needs to be done associating with the list picked
+
+add activity - add task
+task name
+due date - date, time 
+repeat  - dropdown
+add to which list - dropdown
+
+
+ task lists activity - activity so users can view and edit their list of lists
+a list of all user's lists
+
+
+add in batch mode activity
+
+
+settings 

@@ -10,14 +10,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 6;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "SHERRY";
 
     public static final String TABLE = " TASKS ";
-    public static final String KEY_ID = " _id ";
+    public static final String KEY_ID = "_id";
     public static final String KEY_TASK = "Task";
-    public static final String KEY_DATE = "Date";
-    public static final String KEY_TIME = "Time";
+    public static final String KEY_DATETIME = "DateTime";
     public static final String KEY_REPEAT = "Repeat";
     public static final String KEY_LIST = "List";
 
@@ -25,8 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE IF NOT EXISTS " + TABLE + " ( " +
                     KEY_ID          + " INTEGER PRIMARY KEY autoincrement, " +
                     KEY_TASK       + " TEXT, " +
-                    KEY_DATE         + " FLOAT, " +
-                    KEY_TIME        + " FLOAT, " +
+                    KEY_DATETIME         + " TEXT, " +
                     KEY_REPEAT        + " TEXT, " +
                     KEY_LIST        + " TEXT) ";
 

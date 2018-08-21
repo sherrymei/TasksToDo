@@ -6,12 +6,16 @@ package com.example.sherrymei.taskstodo;
 
 public class Task {
 
-    private String item;
+    private int id;
+    private String item, datetime, repeat, list;
     private boolean isDone = false;
 
-    public Task(String item, boolean isDone){
-        this.item = item;
-        this.isDone = isDone;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getItem() {
@@ -20,6 +24,30 @@ public class Task {
 
     public void setItem(String item) {
         this.item = item;
+    }
+
+    public String getDateTime() {
+        return datetime;
+    }
+
+    public void setDateTime(String datetime) {
+        this.datetime = datetime;
+    }
+
+    public String getRepeat() {
+        return repeat;
+    }
+
+    public void setRepeat(String repeat) {
+        this.repeat = repeat;
+    }
+
+    public String getList() {
+        return list;
+    }
+
+    public void setList(String list) {
+        this.list = list;
     }
 
     public boolean isDone() {

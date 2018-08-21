@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.CheckBox;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -48,7 +50,8 @@ public class CheckboxBaseAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.item_todo, parent, false);
 
             holder.checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
-            holder.textView = (TextView) convertView.findViewById(R.id.task_title);
+            holder.textView1 = (TextView) convertView.findViewById(R.id.task_title);
+            holder.textView2 = (TextView) convertView.findViewById(R.id.datetime);
 
             convertView.setTag(holder);
 
@@ -58,7 +61,8 @@ public class CheckboxBaseAdapter extends BaseAdapter {
         }
 
         Task taskItem = taskList.get(position);
-        holder.textView.setText(taskItem.getItem());
+        holder.textView1.setText(taskItem.getItem());
+        holder.textView2.setText(taskItem.getDateTime());
         holder.checkbox.setChecked(taskItem.isDone());
 
         return convertView;
@@ -66,21 +70,8 @@ public class CheckboxBaseAdapter extends BaseAdapter {
     }
     private class ViewHolder {
         CheckBox checkbox;
-        TextView textView;
+        TextView textView1;
+        TextView textView2;
 
     }
 }
-
-/*
-private class MyAdapter extends BaseAdapter {
-// override other abstract methods here
-@Override
-public View getView(int position, View convertView, ViewGroup container) {
-if (convertView == null) {
-convertView = getLayoutInflater().inflate(R.layout.list_item, container, false);
-}
-((TextView) convertView.findViewById(android.R.id.text1)) .setText(getItem(position));
-return convertView;
-}
-}
- */

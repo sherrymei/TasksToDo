@@ -7,5 +7,6 @@
         <item>Biweekly</item>
         <item>Monthly</item>
         <item>Yearly</item>
+        <item>Other&#8230;</item>
     </string-array>
 </resources>

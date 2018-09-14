@@ -17,7 +17,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -65,80 +64,9 @@ public class AddTask extends AppCompatActivity {
 
                 DatePickerDialog mDatePicker = new DatePickerDialog(AddTask.this, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
-                        String monthString;
-                        switch (selectedMonth) {
-                            case 0:
-                                monthString = "January";
-                                break;
-                            case 1:
-                                monthString = "February";
-                                break;
-                            case 2:
-                                monthString = "March";
-                                break;
-                            case 3:
-                                monthString = "April";
-                                break;
-                            case 4:
-                                monthString = "May";
-                                break;
-                            case 5:
-                                monthString = "June";
-                                break;
-                            case 6:
-                                monthString = "July";
-                                break;
-                            case 7:
-                                monthString = "August";
-                                break;
-                            case 8:
-                                monthString = "September";
-                                break;
-                            case 9:
-                                monthString = "October";
-                                break;
-                            case 10:
-                                monthString = "November";
-                                break;
-                            case 11:
-                                monthString = "December";
-                                break;
-                            default:
-                                monthString = "Invalid month";
-                                break;
-                        }
-
-                        Calendar calendar = new GregorianCalendar(selectedYear, selectedMonth, selectedDay-1);
-                        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-
-                        String dayString;
-                        switch (dayOfWeek) {
-                            case 1:
-                                dayString = "Monday";
-                                break;
-                            case 2:
-                                dayString = "Tuesday";
-                                break;
-                            case 3:
-                                dayString = "Wednesday";
-                                break;
-                            case 4:
-                                dayString = "Thursday";
-                                break;
-                            case 5:
-                                dayString = "Friday";
-                                break;
-                            case 6:
-                                dayString = "Saturday";
-                                break;
-                            case 7:
-                                dayString = "Sunday";
-                                break;
-                            default:
-                                dayString = "Invalid day";
-                                break;
-                        }
-
+                        Calendar calendar = new GregorianCalendar(selectedYear, selectedMonth, selectedDay);
+                        String dayString = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US);
+                        String monthString = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US);
                         String dateString = (dayString + ", " + monthString + " " + selectedDay + ", " + selectedYear);
                         dPicker.setText(dateString);
                     }
@@ -160,7 +88,7 @@ public class AddTask extends AppCompatActivity {
                         if (selectedHour >= 12) am_pm = "PM";
                         else am_pm = "AM";
                         if (selectedHour > 12) selectedHour = selectedHour%12;
-                        String timeString = String.format("%02d:%02d", selectedHour, selectedMinute) + " " + am_pm;
+                        String timeString = String.format(Locale.US, "%02d:%02d", selectedHour, selectedMinute) + " " + am_pm;
                         tPicker.setText(timeString);
                     }
                 },hour,minute, false);
@@ -172,51 +100,43 @@ public class AddTask extends AppCompatActivity {
                 R.array.tasks_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
     }
 
     public void onClick(View view) {
-        //// TODO: store time as 24 hour
         //// TODO: make tasks repeatable
           // have repeat an alert box to repeat task
         //// TODO: make user create own lists and also add to their own list
-/*
-*         https://stackoverflow.com/questions/41927892/how-to-order-by-date-time-with-am-pm-in-sqlite
-*         SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm");
-        SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mma");
-        Date date=new Date();
-        try {
-            date = parseFormat.parse(AmPmTimeFormatColumn);
-        }catch (Exception e){}
-        values.put("24HourFormatColumn", displayFormat.format(date));
-*
-*/
 
         String taskName = taskTxt.getText().toString();
-        String datetext = dPicker.getText().toString();
-        String timetext = tPicker.getText().toString();
+        String dateText = dPicker.getText().toString();
+        String timeText = tPicker.getText().toString();
         String repeat = spinner.getSelectedItem().toString();
         String list = "Default";
 
-        String pattern1 = "EEEE, MMMM dd, yyyy HH:mm a";
-        String pattern2 = "yyyy-MM-dd HH:mm:ss.sss"; //YYYY-MM-DD HH:MM:SS.SSS
-
-        SimpleDateFormat format1 = new SimpleDateFormat(pattern1,Locale.US);
-        SimpleDateFormat format2 = new SimpleDateFormat(pattern2,Locale.US);
-
-        String datetime = "";
-
-        try {
-            Date date = format1.parse(datetext + " " + timetext);
-            datetime = format2.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        table.addTask(taskName,datetime,repeat,list);
+        String delims = "[ ,]+";
+        String dateTimeText = dateText + " " + timeText;
+        String[] tokens = dateTimeText.split(delims);
+        String month = formatMonth(tokens[1]);
+        if (!timeText.equals(""))
+            table.addTask(taskName,tokens[0],month,tokens[2],tokens[3],tokens[4],tokens[5],repeat,list);
+        else
+            table.addTask(taskName,tokens[0],month,tokens[2],tokens[3],"","",repeat,list);
 
         Intent intent = new Intent(AddTask.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    private String formatMonth(String mmm){
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat in = new SimpleDateFormat("MMM", Locale.US);
+        SimpleDateFormat out = new SimpleDateFormat("MM", Locale.US);
+        String month = mmm;
+        try{
+            calendar.setTime(in.parse(mmm));
+            month = out.format(calendar.getTime());
+        }
+        catch (ParseException e){}
+        return month;
     }
 }

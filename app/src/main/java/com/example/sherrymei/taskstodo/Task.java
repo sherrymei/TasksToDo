@@ -1,5 +1,11 @@
 package com.example.sherrymei.taskstodo;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 /**
  * Created by SHERRYMEI on 7/29/2018.
  */
@@ -7,7 +13,8 @@ package com.example.sherrymei.taskstodo;
 public class Task {
 
     private int id;
-    private String item, datetime, repeat, list;
+    private String item, month, dayWeek, time, ampm, repeat, list;
+    private int dayMonth, year;
     private boolean isDone = false;
 
     public int getId() {
@@ -26,12 +33,31 @@ public class Task {
         this.item = item;
     }
 
-    public String getDateTime() {
-        return datetime;
+
+    public void setDayWeek(String dayWeek) {
+        this.dayWeek = dayWeek;
     }
 
-    public void setDateTime(String datetime) {
-        this.datetime = datetime;
+    public void setMonth(int month) {
+        Calendar calendar = new GregorianCalendar(year, month, dayMonth);
+        String monthString = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US);
+        this.month = monthString;
+    }
+
+    public void setDayMonth(int dayMonth) {
+        this.dayMonth = dayMonth;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setAmPm(String am_pm) {
+        this.ampm = am_pm;
     }
 
     public String getRepeat() {
@@ -56,5 +82,10 @@ public class Task {
 
     public void setDone(boolean done) {
         isDone = done;
+    }
+
+    public String getDateTime() {
+        String dt = dayWeek + ", " + month + " " + dayMonth + ", " + year + " " + time + " " + ampm;
+        return dt;
     }
 }

@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Task> tasks = table.getAll();
         CheckboxBaseAdapter checkboxAdapter = new CheckboxBaseAdapter(this,tasks);
         listViewWithCheckbox.setAdapter(checkboxAdapter);
+
+        //TODO: onclick on listview item -> editTask activity
     }
 
     @Override
